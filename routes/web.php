@@ -14,6 +14,8 @@ use App\Http\Controllers\Admin\AdminAnswerController;
 use App\Http\Controllers\Admin\AdminAdminController;
 use App\Http\Controllers\Admin\AdminImportController;
 use App\Http\Controllers\Admin\AdminSettingsController;
+use App\Http\Controllers\Admin\AdminExportController;
+use App\Http\Controllers\Admin\AdminBulkDeleteController;
 use App\Models\Activities;
 use App\Models\Questions;
 use App\Models\Registrations;
@@ -126,6 +128,16 @@ Route::prefix('dashboard')->group(function () {
         ->only(['index', 'update'])
         ->name("index", 'dashboard.settings.index')
         ->name("update", 'dashboard.settings.update')
+        ->middleware(['auth', 'verified', 'can:view dashboard']);
+    Route::resource('/exporteren', AdminExportController::class)
+        ->only(['index', 'store'])
+        ->name("index", 'dashboard.export.index')
+        ->name("store", 'dashboard.export.store')
+        ->middleware(['auth', 'verified', 'can:view dashboard']);
+    Route::resource('/resetten', AdminBulkDeleteController::class)
+        ->only(['index', 'store'])
+        ->name("index", 'dashboard.bulk-delete.index')
+        ->name("store", 'dashboard.bulk-delete.store')
         ->middleware(['auth', 'verified', 'can:view dashboard']);
 });
 

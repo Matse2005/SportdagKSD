@@ -1,6 +1,5 @@
 @php
     //  SHow if registrations are open
-    date_default_timezone_set('Europe/Brussels');
     $utc_start_datetime = strtotime(date('Y-m-d H:i', strtotime($settings['start_datetime']->value)));
     $utc_end_datetime = strtotime(date('Y-m-d H:i', strtotime($settings['end_datetime']->value)));
     

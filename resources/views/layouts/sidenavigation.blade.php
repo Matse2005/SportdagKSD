@@ -10,7 +10,7 @@
                             <x-dashboard-nav-link :url="route('dashboard.settings.index')" icon="calendar" page="Instellingen"
                                 :active="request()->routeIs('dashboard.settings.index')" />
                         </div>
-                        <div class="mt-6">
+                        <div class="mt-6 border-b border-gray-300 dark:border-gray-500">
                             <x-dashboard-nav-link :url="route('dashboard.accounts.index')" icon="users" page="Accounts" :active="request()->routeIs('dashboard.accounts.index')" />
                             <x-dashboard-nav-link :url="route('dashboard.activities.index')" icon="basketball" page="Activiteiten"
                                 :active="request()->routeIs('dashboard.activities.index')" />
@@ -20,6 +20,12 @@
                                 :active="request()->routeIs('dashboard.questions.index')" />
                             <x-dashboard-nav-link :url="route('dashboard.answers.index')" icon="square-poll-horizontal" page="Antwoorden"
                                 :active="request()->routeIs('dashboard.answers.index')" />
+                        </div>
+                        <div class="mt-6">
+                            <x-dashboard-nav-link :url="route('dashboard.export.index')" icon="file-export" page="Exporteren"
+                                :active="request()->routeIs('dashboard.export.index')" />
+                            <x-dashboard-nav-link :url="route('dashboard.bulk-delete.index')" icon="trash-can" page="Resetten"
+                                class="hover:text-red-700" :active="request()->routeIs('dashboard.bulk-delete.index')" />
                         </div>
                     </ul>
                 </div>
@@ -67,17 +73,30 @@
                     <div class="flex justify-end w-full">
                     </div>
                     <ul class="py-6 ">
-                        <x-dashboard-nav-link :url="route('dashboard')" icon="objects-column" page="Dashboard"
-                            :active="request()->routeIs('dashboard')" />
-                        <x-dashboard-nav-link :url="route('dashboard.accounts.index')" icon="users" page="Accounts" :active="request()->routeIs('dashboard.accounts.index')" />
-                        <x-dashboard-nav-link :url="route('dashboard.activities.index')" icon="basketball" page="Activiteiten"
-                            :active="request()->routeIs('dashboard.activities.index')" />
-                        <x-dashboard-nav-link :url="route('dashboard.registrations.index')" icon="calendar-lines-pen" page="Inschrijvingen"
-                            :active="request()->routeIs('dashboard.registrations.index')" />
-                        <x-dashboard-nav-link :url="route('dashboard.questions.index')" icon="person-circle-question" page="Vragen"
-                            :active="request()->routeIs('dashboard.questions.index')" />
-                        <x-dashboard-nav-link :url="route('dashboard.answers.index')" icon="square-poll-horizontal" page="Antwoorden"
-                            :active="request()->routeIs('dashboard.answers.index')" />
+                        <div class="border-b border-gray-300 dark:border-gray-500">
+                            <x-dashboard-nav-link :url="route('dashboard')" icon="objects-column" page="Dashboard"
+                                :active="request()->routeIs('dashboard')" />
+                            <x-dashboard-nav-link :url="route('dashboard.settings.index')" icon="calendar" page="Instellingen"
+                                :active="request()->routeIs('dashboard.settings.index')" />
+                        </div>
+                        <div class="mt-6 border-b border-gray-300 dark:border-gray-500">
+                            <x-dashboard-nav-link :url="route('dashboard.accounts.index')" icon="users" page="Accounts"
+                                :active="request()->routeIs('dashboard.accounts.index')" />
+                            <x-dashboard-nav-link :url="route('dashboard.activities.index')" icon="basketball" page="Activiteiten"
+                                :active="request()->routeIs('dashboard.activities.index')" />
+                            <x-dashboard-nav-link :url="route('dashboard.registrations.index')" icon="calendar-lines-pen" page="Inschrijvingen"
+                                :active="request()->routeIs('dashboard.registrations.index')" />
+                            <x-dashboard-nav-link :url="route('dashboard.questions.index')" icon="person-circle-question" page="Vragen"
+                                :active="request()->routeIs('dashboard.questions.index')" />
+                            <x-dashboard-nav-link :url="route('dashboard.answers.index')" icon="square-poll-horizontal" page="Antwoorden"
+                                :active="request()->routeIs('dashboard.answers.index')" />
+                        </div>
+                        <div class="mt-6">
+                            <x-dashboard-nav-link :url="route('dashboard.accounts.index')" icon="file-export" page="Exporteren"
+                                :active="request()->routeIs('dashboard.accounts.index')" />
+                            <x-dashboard-nav-link :url="route('dashboard.activities.index')" icon="trash-can" page="Resetten"
+                                :active="request()->routeIs('dashboard.activities.index')" />
+                        </div>
                     </ul>
                 </div>
             </div>
