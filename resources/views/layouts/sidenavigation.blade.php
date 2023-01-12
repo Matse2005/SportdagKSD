@@ -7,6 +7,8 @@
                         <div class="border-b border-gray-300 dark:border-gray-500">
                             <x-dashboard-nav-link :url="route('dashboard')" icon="objects-column" page="Dashboard"
                                 :active="request()->routeIs('dashboard')" />
+                            <x-dashboard-nav-link :url="route('dashboard.settings.index')" icon="calendar" page="Instellingen"
+                                :active="request()->routeIs('dashboard.settings.index')" />
                         </div>
                         <div class="mt-6">
                             <x-dashboard-nav-link :url="route('dashboard.accounts.index')" icon="users" page="Accounts" :active="request()->routeIs('dashboard.accounts.index')" />

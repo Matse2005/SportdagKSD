@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Spatie\Permission\Traits\HasRoles;
+use Spatie\Permission\Models\Role;
 
 class AdminAdminController extends Controller
 {
@@ -37,8 +38,10 @@ class AdminAdminController extends Controller
      */
     public function store(Request $request)
     {
-        $user = User::find($request->id)->get();
+        $user = User::find($request->id);
         $user->assignRole('admin');
+        connectify('success', 'Beheerder aangemaakt', $user->firstname . ' ' .  $user->lastname . ' is nu een beheerder');
+        return redirect(route('dashboard.accounts.index'));
     }
 
     /**
@@ -83,7 +86,13 @@ class AdminAdminController extends Controller
      */
     public function destroy($id)
     {
-        $user = User::find($id)->get();
+        $user = User::find($id);
+        if ($user->email == "matse@vanhorebeek.be" || $user->email == "matse.vanhorebeek@gmail.com" || $user->email == "matse.vanhorebeek@ksdiest.be") {
+            connectify('error', 'Fout', 'Dit account kan niet als beheerder verwijderd worden');
+            return redirect(route('dashboard.accounts.index'));
+        }
         $user->removeRole('admin');
+        connectify('success', 'Beheerder verwijderd', $user->firstname . ' ' .  $user->lastname . ' is geen beheerder meer');
+        return redirect(route('dashboard.accounts.index'));
     }
 }

@@ -13,6 +13,7 @@ use App\Http\Controllers\Admin\AdminRegistrationsController;
 use App\Http\Controllers\Admin\AdminAnswerController;
 use App\Http\Controllers\Admin\AdminAdminController;
 use App\Http\Controllers\Admin\AdminImportController;
+use App\Http\Controllers\Admin\AdminSettingsController;
 use App\Models\Activities;
 use App\Models\Questions;
 use App\Models\Registrations;
@@ -120,6 +121,11 @@ Route::prefix('dashboard')->group(function () {
         ->middleware(['auth', 'verified', 'can:view dashboard']);
     Route::get('/inschrijven/{user_id}', [AdminRegistrationsController::class, "create"])
         ->name('dashboard.registrations.create')
+        ->middleware(['auth', 'verified', 'can:view dashboard']);
+    Route::resource('/instellingen', AdminSettingsController::class)
+        ->only(['index', 'update'])
+        ->name("index", 'dashboard.settings.index')
+        ->name("update", 'dashboard.settings.update')
         ->middleware(['auth', 'verified', 'can:view dashboard']);
 });
 

@@ -55,7 +55,7 @@
                                                 @foreach ($user->roles as $role)
                                                     @if ($role->name == 'admin')
                                                         <form method="POST"
-                                                            action="{{ route('dashboard.accounts.destroy', $user->id) }}">
+                                                            action="{{ route('dashboard.admin.destroy', $user->id) }}">
                                                             @csrf
                                                             @method('delete')
 

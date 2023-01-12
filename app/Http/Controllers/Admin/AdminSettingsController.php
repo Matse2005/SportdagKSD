@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Admin;
 use App\Http\Controllers\Controller;
 use App\Models\Setting;
 use Illuminate\Http\Request;
+use Illuminate\Contracts\Cache\Factory;
 
 class AdminSettingsController extends Controller
 {
@@ -15,7 +16,7 @@ class AdminSettingsController extends Controller
      */
     public function index()
     {
-        //
+        return view('dashboard.edit.settings');
     }
 
     /**
@@ -68,14 +69,24 @@ class AdminSettingsController extends Controller
      * @param  \App\Models\Setting  $setting
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, Setting $setting)
+    public function update(Request $request, Factory $cache, Setting $setting)
     {
-        $settings = cache()->remember(
-            'settings',
-            3600,
-            fn () => Setting::all()->keyBy('key')
-        );
-        view()->share('settings', $settings);
+        if ($request->isMethod('put')) {
+            $validated = $request->validate([
+                "key" => 'required',
+                "value" => 'required'
+            ]);
+            Setting::where('key', $request->key)->update(array('value' => $request->value));
+            cache()->forget('settings');
+            // When the settings have been updated, clear the cache for the key 'settings'
+            $settings = cache()->remember(
+                'settings',
+                3600,
+                fn () => Setting::all()->keyBy('key')
+            );
+            view()->share('settings', $settings);
+            return redirect()->route('dashboard.settings.index');
+        }
     }
 
     /**
