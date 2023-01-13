@@ -5,7 +5,7 @@ namespace App\Http\Controllers\admin;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use Maatwebsite\Excel\Facades\Excel;
-use App\Exports\RegistrationsExport;
+use App\Exports\ExportExport;
 
 class AdminExportController extends Controller
 {
@@ -16,6 +16,6 @@ class AdminExportController extends Controller
      */
     public function export()
     {
-        return Excel::download(new RegistrationsExport, 'inschrijvingen.xlsx');
+        return Excel::download(new ExportExport, 'inschrijvingen.xlsx');
     }
 }
