@@ -7,13 +7,13 @@
 <a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/l/laravel/framework" alt="License"></a>
 </p>
 
-## ToDo
+## To Do
 
 -   Edit settings
 -   Edit activity
 -   Edit question
 -   Edit user
--   Export data
+-   Export data (Only answers)
 -   Bulk delete
 -   Make questions anwserable
 

@@ -4,6 +4,8 @@ namespace App\Http\Controllers\admin;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
+use Maatwebsite\Excel\Facades\Excel;
+use App\Exports\RegistrationsExport;
 
 class AdminExportController extends Controller
 {
@@ -12,8 +14,8 @@ class AdminExportController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function export()
     {
-        return view('dashboard.bulk-delete');
+        return Excel::download(new RegistrationsExport, 'inschrijvingen.xlsx');
     }
 }

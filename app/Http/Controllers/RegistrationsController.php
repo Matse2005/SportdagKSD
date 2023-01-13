@@ -7,6 +7,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use App\Http\Controllers\ActivitiesController;
 use App\Models\Activities;
+use App\Models\User;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Support\Facades\Session;
@@ -22,13 +23,22 @@ class RegistrationsController extends Controller
      */
     public function index()
     {
-        $registrated = $this->registrated(Auth()->user()->id);
-        if ($registrated) {
-            $activity = Activities::find($registrated);
-            return view('registration', ['activity' => $activity]);
-        } else {
-            return redirect(route("registrate.index"));
+        // $registrated = $this->registrated(Auth()->user()->id);
+        // if ($registrated) {
+        //     $activity = Activities::find($registrated);
+        //     return view('registration', ['activity' => $activity]);
+        // } else {
+        //     return redirect(route("registrate.index"));
+        // }
+        $registrations = Registrations::all();
+        foreach ($registrations as $registration) {
+            $registration->user = User::find($registration->user_id);
+            $registration->activity = Activities::find($registration->activity_id);
         }
+        // $registrations = json_decode(json_encode($registrations), FALSE);
+        return view('exports.registrations', [
+            'registrations' => $registrations
+        ]);
     }
 
     /**

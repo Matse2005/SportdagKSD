@@ -129,10 +129,11 @@ Route::prefix('dashboard')->group(function () {
         ->name("index", 'dashboard.settings.index')
         ->name("update", 'dashboard.settings.update')
         ->middleware(['auth', 'verified', 'can:view dashboard']);
-    Route::resource('/exporteren', AdminExportController::class)
-        ->only(['index', 'store'])
-        ->name("index", 'dashboard.export.index')
-        ->name("store", 'dashboard.export.store')
+    Route::get('/exporteren', function () {
+        return view('dashboard/export');
+    })->name('dashboard.export.index')->middleware(['auth', 'verified', 'can:view dashboard']);
+    Route::get('/exporteren/export', [AdminExportController::class, 'export'])
+        ->name('dashboard.export.export')
         ->middleware(['auth', 'verified', 'can:view dashboard']);
     Route::resource('/resetten', AdminBulkDeleteController::class)
         ->only(['index', 'store'])
