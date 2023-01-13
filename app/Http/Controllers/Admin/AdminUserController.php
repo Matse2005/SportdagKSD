@@ -128,7 +128,7 @@ class AdminUserController extends Controller
     public function destroy($id)
     {
         $user = User::find($id);
-        if ($user->email == "matse@vanhorebeek.be" || $user->email == "matse.vanhorebeek@gmail.com" || $user->email == "matse.vanhorebeek@ksdiest.be") {
+        if ($user->email == "matse@vanhorebeek.be" || $user->email == "matse.vanhorebeek@gmail.com") {
             connectify('error', 'Fout', 'Dit account kan niet verwijderd worden');
             return redirect(route('dashboard.accounts.index'));
         }
