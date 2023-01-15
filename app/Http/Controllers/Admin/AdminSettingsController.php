@@ -75,19 +75,8 @@ class AdminSettingsController extends Controller
             "start_datetime" => 'required',
             "end_datetime" => 'required'
         ]);
-        // Setting::where('key', $request->key)->update(array('value' => $request->value));
 
         foreach ($validated as $key => $value) {
-            // $newDateTime = new \DateTime($value);
-            // $newDateTime->setTimezone(new \DateTimeZone("UTC"));
-            // $utc = $newDateTime->format("Y-m-d H:i");
-
-            // $local = strtotime(date('Y-m-d H:i', strtotime($value)));
-
-            // $offset = date('Z');
-
-            // $utc = date('Y-m-d H:i', $local - $offset);
-
             $tz_from = new \DateTimeZone('Europe/Brussels');
             $tz_to = new \DateTimeZone('UTC');
 

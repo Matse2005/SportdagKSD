@@ -39,6 +39,8 @@
             @if ($current_datetime < $local_start_datetime)
                 De inschrijvingen starten <br class="sm:hidden"> over <span
                     class="font-bold rounded-md sm:font-base sm:p-2 sm:bg-ksdGreen/75">{{ $time_till_readable }}</span>
+            @elseif ($current_datetime > $local_end_datetime)
+                De inschrijvingen zijn gesloten
             @else
                 De inschrijvingen sluiten <br class="sm:hidden"> over <span
                     class="font-bold rounded-md sm:font-base sm:p-2 sm:bg-ksdGreen/75">{{ $time_till_readable }}</span>

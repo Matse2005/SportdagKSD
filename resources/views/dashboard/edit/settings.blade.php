@@ -43,8 +43,7 @@
                             <input type="datetime-local" name="end_datetime" id="end_datetime"
                                 class="w-full bg-gray-100 border-none rounded-md shadow-sm dark:bg-gray-900 dark:text-gray-300"
                                 placeholder="Inschrijvingen sluiten op?"
-                                value="{{ old('end_datetime', utc_to_local($settings['end_datetime']->value)) }}"
-                                required>
+                                value="{{ utc_to_local($settings['end_datetime']->value) }}" required>
 
                         </div>
                     </div>

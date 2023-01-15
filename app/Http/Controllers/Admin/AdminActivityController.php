@@ -88,7 +88,7 @@ class AdminActivityController extends Controller
     /**
      * Show the form for editing the specified resource.
      *
-     * @param  \App\Models\User  $user
+     * @param  \App\Models\Activities  $activity
      * @return \Illuminate\Http\Response
      */
     public function edit(Activities $activity)
@@ -100,19 +100,53 @@ class AdminActivityController extends Controller
      * Update the specified resource in storage.
      *
      * @param  \Illuminate\Http\Request  $request
-     * @param  \App\Models\User  $user
+     * @param  \App\Models\Activities  $activity
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request)
+    public function update(Request $request, $id)
     {
-        $validated = $request->validate([
-            'firstname' => 'required|string|max:255',
-            'lastname' => 'required|string|max:255',
-            'email' => 'required|email|max:255',
-            'class' => 'required|string|max:255',
+        $request->validate([
+            'name' => 'required|string|max:255',
+            'location' => 'required|string|max:255',
+            'departure_place' => 'required|string|max:255',
+            'departure_time' => 'required|date_format:H:i|max:255',
+            'return_place' => 'required|string|max:255',
+            'return_time' => 'required|date_format:H:i|max:255',
+            'essentials' => 'nullable',
+            'price' => 'required|numeric',
+            'max_participants' => 'required|numeric',
+            'description' => 'required',
         ]);
-        $activity->update($validated);
-        return redirect(route('chirps.index'));
+
+        $essentials = json_encode(preg_split("/\,/", $request->essentials));
+        $description = str_replace('\n', "<br>", $request->description);
+        if ($request->file('image') !== null)
+            $image = file_get_contents($request->file('image'));
+
+        Activities::find($id)->update([
+            'name' => $request->name,
+            'location' => $request->location,
+            'departure_place' => $request->departure_place,
+            'departure_time' => $request->departure_time,
+            'return_place' => $request->return_place,
+            'return_time' => $request->return_time,
+            'essentials' => $essentials,
+            'price' => $request->price,
+            'max_participants' => $request->max_participants,
+            'description' => $description,
+            'image' => $image,
+            'visible' => 1
+        ]);
+
+
+        if ($request->file('image') !== null) {
+            $image = file_get_contents($request->file('image'));
+            Activities::find($id)->update([
+                'image' => $image,
+            ]);
+        }
+
+        return redirect(route("dashboard.activities.index"));
     }
 
     /**
