@@ -71,22 +71,43 @@ class AdminSettingsController extends Controller
      */
     public function update(Request $request, Factory $cache, Setting $setting)
     {
-        if ($request->isMethod('put')) {
-            $validated = $request->validate([
-                "key" => 'required',
-                "value" => 'required'
-            ]);
-            Setting::where('key', $request->key)->update(array('value' => $request->value));
-            cache()->forget('settings');
-            // When the settings have been updated, clear the cache for the key 'settings'
-            $settings = cache()->remember(
-                'settings',
-                3600,
-                fn () => Setting::all()->keyBy('key')
-            );
-            view()->share('settings', $settings);
-            return redirect()->route('dashboard.settings.index');
+        $validated = $request->validate([
+            "start_datetime" => 'required',
+            "end_datetime" => 'required'
+        ]);
+        // Setting::where('key', $request->key)->update(array('value' => $request->value));
+
+        foreach ($validated as $key => $value) {
+            // $newDateTime = new \DateTime($value);
+            // $newDateTime->setTimezone(new \DateTimeZone("UTC"));
+            // $utc = $newDateTime->format("Y-m-d H:i");
+
+            // $local = strtotime(date('Y-m-d H:i', strtotime($value)));
+
+            // $offset = date('Z');
+
+            // $utc = date('Y-m-d H:i', $local - $offset);
+
+            $tz_from = new \DateTimeZone('Europe/Brussels');
+            $tz_to = new \DateTimeZone('UTC');
+
+            $orig_time = new \DateTime($value, $tz_from);
+            $new_time = $orig_time->setTimezone($tz_to);
+
+            $utc = $new_time->format('Y-m-d H:i');
+
+            Setting::where('key', $key)->update(array('value' => $utc));
         }
+
+        cache()->forget('settings');
+        // When the settings have been updated, clear the cache for the key 'settings'
+        $settings = cache()->remember(
+            'settings',
+            3600,
+            fn () => Setting::all()->keyBy('key')
+        );
+        view()->share('settings', $settings);
+        return redirect()->route('dashboard.settings.index');
     }
 
     /**

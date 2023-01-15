@@ -9,7 +9,6 @@
 
 ## To Do
 
--   Edit settings
 -   Edit activity
 -   Edit question
 -   Edit user

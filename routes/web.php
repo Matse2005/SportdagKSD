@@ -125,9 +125,11 @@ Route::prefix('dashboard')->group(function () {
         ->name('dashboard.registrations.create')
         ->middleware(['auth', 'verified', 'can:view dashboard']);
     Route::resource('/instellingen', AdminSettingsController::class)
-        ->only(['index', 'update'])
+        ->only(['index'])
         ->name("index", 'dashboard.settings.index')
-        ->name("update", 'dashboard.settings.update')
+        ->middleware(['auth', 'verified', 'can:view dashboard']);
+    Route::post('/instellingen/update', [AdminSettingsController::class, "update"])
+        ->name('dashboard.settings.update')
         ->middleware(['auth', 'verified', 'can:view dashboard']);
     Route::get('/exporteren', function () {
         return view('dashboard/export');
