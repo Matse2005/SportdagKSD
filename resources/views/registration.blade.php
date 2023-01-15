@@ -50,17 +50,6 @@
                                 {{ ($free = $activity->max_participants - $activity->participants) == 1 ? $free . ' plek vrij' : $free . ' plekken vrij' }}
                             </p>
                         @endif
-                        {{-- <div class="my-3">
-                            @if (!$registrated && $activity->participants < $activity->max_participants)
-                                <form method="POST" action="{{ route('registrate.store') }}">
-                                    @csrf
-                                    <input type="hidden" name="user_id" value="{{ Auth::user()->id }}">
-                                    <input type="hidden" name="activity_id" value="{{ $activity->id }}">
-                                    <x-primary-button>{{ __('Inschrijven') }}</x-primary-button>
-                                    </a>
-                                </form>
-                            @endif
-                        </div> --}}
                     </div>
                 </div>
                 <div
@@ -76,6 +65,31 @@
                     class="p-3 duration-300 ease-in-out delay-150 rounded-md shadow-lg sm:col-span-2 dark:text-white dark:bg-gray-800 sm:p-5">
                     <h1 class="mb-2 text-lg font-bold uppercase text-ksdGreen sm:text-2xl">troeven</h1>
                     {!! $activity->description !!}
+                </div>
+                <div
+                    class="p-3 duration-300 ease-in-out delay-150 rounded-md shadow-lg sm:col-span-2 dark:text-white dark:bg-gray-800 sm:p-5">
+                    <h1 class="mb-2 text-lg font-bold uppercase text-ksdGreen sm:text-2xl">Bijhorende vragen</h1>
+                    <form method="POST" action="{{ route('answers.update') }}" class="space-y-3 ">
+                        @csrf
+                        @foreach ($questions as $question)
+                            {{ $question->question }}
+                            <div class="flex-1 space-y-1">
+                                <p><span class="font-semibold">{{ $question->question }}</span></p>
+                                <div class="md:flex md:space-x-2 space-y-2 md:space-y-0">
+                                    @if ($question->type == 'dropdown')
+                                        <select name="" id="" required></select>
+                                    @else
+                                        <input type="datetime-local" name="start_datetime" id="start_datetime"
+                                            class="w-full bg-gray-100 border-none rounded-md shadow-sm dark:bg-gray-900 dark:text-gray-300"
+                                            placeholder="Inschrijvingen openen op?" value="" required>
+                                    @endif
+                                </div>
+                            </div>
+                        @endforeach
+
+                        <x-primary-button>{{ __('Opslaan') }}
+                        </x-primary-button>
+                    </form>
                 </div>
             </div>
         </div>

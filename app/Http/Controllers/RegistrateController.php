@@ -65,7 +65,7 @@ class RegistrateController extends Controller
             ]);
             ActivitiesController::update($request->activity_id);
             connectify('success', 'Inschrijving', 'Je inschrijving is gelukt en voltooid.');
-            if ((Questions::where('activity_id', $request->activity_id)->first()) !== null) return redirect(route('questions.index'));
+            if ((Questions::where('activity_id', $request->activity_id)->first()) !== null) return redirect(route('registration.index'));
             else return redirect(route('activities.index'));
         }
     }

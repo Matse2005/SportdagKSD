@@ -16,6 +16,7 @@ use App\Http\Controllers\Admin\AdminImportController;
 use App\Http\Controllers\Admin\AdminSettingsController;
 use App\Http\Controllers\Admin\AdminExportController;
 use App\Http\Controllers\Admin\AdminBulkDeleteController;
+use App\Http\Controllers\AnswerController;
 use App\Models\Activities;
 use App\Models\Questions;
 use App\Models\Registrations;
@@ -45,11 +46,11 @@ Route::resource('/inschrijven', RegistrateController::class)
     ->name('store', 'registrate.store')
     ->middleware(['auth', 'verified']);
 
-Route::resource('/vragen', QuestionController::class)
-    ->only(['index', 'store'])
-    ->name('index', 'questions.index')
-    ->name('store', 'questions.store')
-    ->middleware(['auth', 'verified']);
+Route::prefix('vragen')->group(function () {
+    Route::post('/update', [AnswerController::class, "update"])
+        ->name('answers.update');
+})->middleware(['auth', 'verified']);
+
 
 Route::resource('/inschrijving', RegistrationsController::class)
     ->only(['index', 'destroy'])

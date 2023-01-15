@@ -7,6 +7,8 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use App\Http\Controllers\ActivitiesController;
 use App\Models\Activities;
+use App\Models\Answers;
+use App\Models\Questions;
 use App\Models\User;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Validator;
@@ -26,7 +28,9 @@ class RegistrationsController extends Controller
         $registrated = $this->registrated(Auth()->user()->id);
         if ($registrated) {
             $activity = Activities::find($registrated);
-            return view('registration', ['activity' => $activity]);
+            $questions = Questions::where('activity_id', $activity->id);
+            $answers = Answers::where('user_id', Auth()->user()->id);
+            return view('registration', ['activity' => $activity, 'questions' => $questions, 'answers' => $answers]);
         } else {
             return redirect(route("registrate.index"));
         }
