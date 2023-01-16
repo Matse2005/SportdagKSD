@@ -35,8 +35,8 @@
                             met
                             <span class="font-bold">{{ date('H.i', strtotime($activity->return_time)) }}</span> uur
                         </p>
-                        <p>Opstapplaats: {{ $activity->departure_place }}</p>
-                        <p>Afstapplaats: {{ $activity->return_place }}</p>
+                        <p>Vertrekplaats: {{ $activity->departure_place }}</p>
+                        {{-- <p>: {{ $activity->return_place }}</p> --}}
                     </div>
                     <div class="">
                         <h1 class="text-xl font-bold uppercase text-ksdGreen sm:text-3xl">€ {{ $activity->price }}
