@@ -47,10 +47,12 @@ Route::resource('/inschrijven', RegistrateController::class)
     ->middleware(['auth', 'verified']);
 
 Route::prefix('vragen')->group(function () {
+    Route::resource('/', QuestionController::class)
+        ->name('index', 'questions.index')
+        ->middleware(['auth', 'verified']);
     Route::post('/update', [AnswerController::class, "update"])
         ->name('answers.update');
 })->middleware(['auth', 'verified']);
-
 
 Route::resource('/inschrijving', RegistrationsController::class)
     ->only(['index', 'destroy'])
@@ -60,7 +62,6 @@ Route::resource('/inschrijving', RegistrationsController::class)
 
 Route::get('/activiteit/{id}', [ActivitiesController::class, 'show'])
     ->name('activities.show');
-
 // Dashboard
 Route::prefix('dashboard')->group(function () {
     Route::get('/', function () {

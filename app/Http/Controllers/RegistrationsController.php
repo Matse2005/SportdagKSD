@@ -28,9 +28,16 @@ class RegistrationsController extends Controller
         $registrated = $this->registrated(Auth()->user()->id);
         if ($registrated) {
             $activity = Activities::find($registrated);
-            $questions = Questions::where('activity_id', $activity->id);
-            $answers = Answers::where('user_id', Auth()->user()->id);
-            return view('registration', ['activity' => $activity, 'questions' => $questions, 'answers' => $answers]);
+            $questions_db = Questions::where('activity_id', $activity->id)->get();
+            $questions = [];
+            foreach ($questions_db as $question) {
+                $answer = Answers::where('user_id', Auth()->user()->id)->where('question_id', $question->id)->first();
+                $questions[] = (object) array(
+                    "question" => $question,
+                    "answer" => $answer,
+                );
+            }
+            return view('registration', ['activity' => $activity, 'questions' => $questions]);
         } else {
             return redirect(route("registrate.index"));
         }
@@ -87,7 +94,26 @@ class RegistrationsController extends Controller
      */
     public function update(Request $request, Registrations $registrations)
     {
-        //
+        $request = (object) $request;
+        $registrated = $this->registrated(Auth()->user()->id);
+        if ($registrated) {
+            $activity = Activities::find($registrated);
+            $questions = Questions::where('activity_id', $activity->id)->get();
+            foreach ($questions as $question) {
+                $answer = Answers::where('user_id', Auth()->user()->id)->where('question_id', $question->id)->get();
+                if ($answer !== null)
+                    $answer->delete();
+
+                Answers::create([
+                    "user_id" => Auth()->user()->id,
+                    "question_id" => $question->id,
+                    "answer" => $request[$question->id]
+                ]);
+            }
+            return redirect(route("registration.index"));
+        } else {
+            return redirect(route("registrate.index"));
+        }
     }
 
     /**
@@ -99,6 +125,7 @@ class RegistrationsController extends Controller
     public function destroy($id)
     {
         $registration = Registrations::where('user_id', $id)->first();
+        $answers = Answers::where("user_id", $id)->delete();
         ActivitiesController::update($registration->activity_id, 0);
         $registration->delete();
 

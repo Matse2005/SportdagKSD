@@ -27,7 +27,7 @@ class ActivitiesController extends Controller
      */
     public function show($id)
     {
-        $activities = DB::table('activities')->get()->where("id", "=", $id)->take(1);
+        $activities = Activities::findOrFail($id)->get();
         foreach ($activities as $activity) return view('activity', ['activity' => $activity, 'registrated' => RegistrationsController::registrated(Auth()->user()->id)]);
     }
 

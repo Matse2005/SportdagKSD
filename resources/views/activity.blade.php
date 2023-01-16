@@ -19,8 +19,7 @@
         <div class="px-6 mx-auto space-y-4 max-w-7xl lg:px-8">
             <div
                 class="w-full h-56 duration-300 ease-in-out delay-150 rounded-md shadow-lg sm:h-96 dark:text-white dark:bg-gray-800">
-                <img class="object-cover w-full h-full rounded-md"
-                    src="data:image/jpg;base64,{{ chunk_split(base64_encode($activity->image)) }}"
+                <img class="object-cover w-full h-full rounded-md" src="/storage/{{ $activity->image }}"
                     alt="Activiteit afbeelding" />
             </div>
             <div class="grid grid-cols-1 gap-4 sm:grid-cols-2">

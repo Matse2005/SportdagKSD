@@ -18,9 +18,8 @@
                 </div>
             </div>
             <div
-                class="w-full h-56 duration-300 ease-in-out delay-150 rounded-md shadow-lg  sm:h-96 dark:text-white dark:bg-gray-800">
-                <img class="object-cover w-full h-full rounded-md"
-                    src="data:image/jpg;base64,{{ chunk_split(base64_encode($activity->image)) }}"
+                class="w-full h-56 duration-300 ease-in-out delay-150 rounded-md shadow-lg sm:h-96 dark:text-white dark:bg-gray-800">
+                <img class="object-cover w-full h-full rounded-md" src="/storage/{{ $activity->image }}"
                     alt="Activiteit afbeelding" />
             </div>
             <div class="grid grid-cols-1 gap-4 sm:grid-cols-2">
@@ -72,16 +71,30 @@
                     <form method="POST" action="{{ route('answers.update') }}" class="space-y-3 ">
                         @csrf
                         @foreach ($questions as $question)
-                            {{ $question->question }}
                             <div class="flex-1 space-y-1">
-                                <p><span class="font-semibold">{{ $question->question }}</span></p>
-                                <div class="md:flex md:space-x-2 space-y-2 md:space-y-0">
-                                    @if ($question->type == 'dropdown')
-                                        <select name="" id="" required></select>
+                                <p><span class="font-semibold">{{ $question->question->question }}</span></p>
+                                <div class="space-y-2 md:flex md:space-x-2 md:space-y-0">
+                                    @if ($question->question->type == 'dropdown')
+                                        <select name="{{ $question->question->id }}"
+                                            id="{{ $question->question->id }}"
+                                            class="w-full bg-gray-100 border-none rounded-md shadow-sm dark:bg-gray-900 dark:text-gray-300""
+                                            required>
+                                            @if ($question->answer !== null)
+                                                <option selected disabled value="{{ $question->answer->answer }}">
+                                                    {{ $question->answer->answer }}
+                                                </option>
+                                            @endif
+                                            @foreach (json_decode($question->question->options) as $option)
+                                                <option value="{{ $option }}">{{ $option }}</option>
+                                            @endforeach
+                                        </select>
                                     @else
-                                        <input type="datetime-local" name="start_datetime" id="start_datetime"
+                                        <input type="{{ $question->question->type }}"
+                                            name="{{ $question->question->id }}" id="{{ $question->question->id }}"
                                             class="w-full bg-gray-100 border-none rounded-md shadow-sm dark:bg-gray-900 dark:text-gray-300"
-                                            placeholder="Inschrijvingen openen op?" value="" required>
+                                            placeholder="{{ $question->question->question }}"
+                                            @if ($question->answer !== null) value="{{ $question->answer->answer }}" @endif
+                                            required>
                                     @endif
                                 </div>
                             </div>

@@ -8,6 +8,7 @@ use App\Models\Answers;
 use App\Models\Questions;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Storage;
 
 class AdminActivityController extends Controller
 {
@@ -54,7 +55,8 @@ class AdminActivityController extends Controller
 
         $essentials = json_encode(preg_split("/\,/", $request->essentials));
         $description = str_replace('\n', "<br>", $request->description);
-        $image = file_get_contents($request->file('image'));
+
+        $fileName = time() . '.' . $request->file("image")->getClientOriginalExtension();
 
         Activities::create([
             'name' => $request->name,
@@ -67,9 +69,10 @@ class AdminActivityController extends Controller
             'price' => $request->price,
             'max_participants' => $request->max_participants,
             'description' => $description,
-            'image' => $image,
+            'image' => $fileName,
             'visible' => 1
         ]);
+        $request->file("image")->storeAs('public', $fileName);
 
         return redirect(route("dashboard.activities.index"));
     }
@@ -158,6 +161,7 @@ class AdminActivityController extends Controller
     public function delete($id)
     {
         $activity = Activities::find($id);
+        Storage::delete($activity->image);
         $activity->delete();
 
         $questions = Questions::where("activity_id", "=", $id);

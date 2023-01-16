@@ -25,8 +25,8 @@ class UsersImport implements ToModel, WithHeadingRow, WithUpserts, WithBatchInse
             'firstname'  => $row['voornaam'] ?? $row['firstname'],
             'lastname' => $row['achternaam'] ?? $row['lastname'],
             'email' => $row['email'] ?? $row['email'],
-            'password' => Hash::make(Str::random(10)),
-            'class' => $row['klas'] ?? $row['klas']
+            'password' => "hGSDbvFDs",
+            'class' => $row['klas'] ?? $row['class']
         ]);
     }
 
@@ -40,11 +40,11 @@ class UsersImport implements ToModel, WithHeadingRow, WithUpserts, WithBatchInse
 
     public function batchSize(): int
     {
-        return 50;
+        return 100;
     }
 
     public function chunkSize(): int
     {
-        return 50;
+        return 100;
     }
 }

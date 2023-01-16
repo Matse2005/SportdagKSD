@@ -27,11 +27,10 @@ return new class extends Migration
             $table->integer('max_participants')->default(0);
             $table->integer('participants')->default(0);
             $table->text('description');
+            $table->string('image');
             $table->boolean('visible');
             $table->timestamps();
         });
-
-        DB::statement("ALTER TABLE activities ADD image LONGBLOB");
     }
 
     /**

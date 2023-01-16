@@ -26,8 +26,7 @@
                       {{-- border-2 {{ $activity->participants < $activity->max_participants ? 'border-green-500' : 'border-red-500' }} --}}
                       ">
                             <div class="object-fill h-2/3">
-                                <img class="object-cover w-full h-full rounded-t-md"
-                                    src="data:image/jpg;base64,{{ chunk_split(base64_encode($activity->image)) }}"
+                                <img class="object-cover w-full h-full rounded-t-md" src="/storage/{{ $activity->image }}"
                                     alt="Activiteit afbeelding" />
                             </div>
                             <div class="px-2.5 sm:px-4 py-3 flex items-center h-1/3">

@@ -12,9 +12,7 @@
 -   Edit activity
 -   Edit question
 -   Edit user
--   Export data (Only answers)
 -   Bulk delete
--   Make questions anwserable
 
 ## About Laravel
 

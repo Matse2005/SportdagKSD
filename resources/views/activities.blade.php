@@ -1,22 +1,19 @@
 <x-app-layout>
     <div class="py-12">
-        <div class="max-w-7xl mx-auto px-6 lg:px-8">
+        <div class="px-6 mx-auto max-w-7xl lg:px-8">
             <div
-                class="h-full grid grid-cols-1 gap-y-10 gap-x-6 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:gap-x-8">
+                class="grid h-full grid-cols-1 gap-y-10 gap-x-6 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:gap-x-8">
                 @foreach ($activities as $activity)
                     <a a href="{{ route('activities.show', $activity->id) }}"
-                        class="w-full hover:scale-110 hover:bg-white dark:hover:bg-gray-800 ease-in-out duration-150 dark:text-white rounded-lg hover:shadow-md h-full group
-                        ">
-                        <div class="object-fill
-                        h-2/3 ease-in-out duration-150">
-                            <img class="rounded-md group-hover:rounded-b-none object-cover h-full w-full ease-in-out duration-150"
-                                src="data:image/jpg;base64,{{ chunk_split(base64_encode($activity->image)) }}"
-                                alt="Activiteit afbeelding" />
+                        class="w-full h-full duration-150 ease-in-out rounded-lg hover:scale-110 hover:bg-white dark:hover:bg-gray-800 dark:text-white hover:shadow-md group ">
+                        <div class="object-fill duration-150 ease-in-out h-2/3">
+                            <img class="object-cover w-full h-full duration-150 ease-in-out rounded-md group-hover:rounded-b-none"
+                                src="/storage/{{ $activity->image }}" alt="Activiteit afbeelding" />
                         </div>
                         <div class=" group-hover:scale-[0.95] group-hover:px-1 ease-in-out duration-150">
-                            <div class="py-3 flex items-center h-1/3 ease-in-out duration-150">
+                            <div class="flex items-center py-3 duration-150 ease-in-out h-1/3">
                                 <div class="">
-                                    <h5 class="mb-2 text-sm sm:text-md font-bold tracking-tight">
+                                    <h5 class="mb-2 text-sm font-bold tracking-tight sm:text-md">
                                         {{ $activity->name }}
                                     </h5>
                                     <div class="flex items-center {{-- gap-4 --}}">
