@@ -6,10 +6,13 @@ use App\Models\User;
 use Maatwebsite\Excel\Concerns\ToModel;
 use Maatwebsite\Excel\Concerns\WithHeadingRow;
 use Maatwebsite\Excel\Concerns\WithUpserts;
+use Maatwebsite\Excel\Concerns\WithChunkReading;
+use Maatwebsite\Excel\Concerns\WithBatchInserts;
+use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Str;
 
-class UsersImport implements ToModel, WithHeadingRow, WithUpserts
+class UsersImport implements ToModel, WithHeadingRow, WithUpserts, WithBatchInserts, WithChunkReading, ShouldQueue
 {
     /**
      * @param array $row
@@ -33,5 +36,15 @@ class UsersImport implements ToModel, WithHeadingRow, WithUpserts
     public function uniqueBy()
     {
         return 'email';
+    }
+
+    public function batchSize(): int
+    {
+        return 50;
+    }
+
+    public function chunkSize(): int
+    {
+        return 50;
     }
 }
