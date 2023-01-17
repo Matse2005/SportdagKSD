@@ -16,7 +16,7 @@ class ActivitiesController extends Controller
      */
     public function index()
     {
-        $activities = DB::table('activities')->get()->where("visible", "=", "1");
+        $activities = Activities::where("visible", 1)->get();
         return view('activities', ['activities' => $activities]);
     }
 
@@ -27,8 +27,8 @@ class ActivitiesController extends Controller
      */
     public function show($id)
     {
-        $activities = Activities::findOrFail($id)->get();
-        foreach ($activities as $activity) return view('activity', ['activity' => $activity, 'registrated' => RegistrationsController::registrated(Auth()->user()->id)]);
+        $activity = DB::table('activities')->get()->where("id", "=", $id)->first();
+        return view('activity', ['activity' => $activity, 'registrated' => RegistrationsController::registrated(Auth()->user()->id)]);
     }
 
 
