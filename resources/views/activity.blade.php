@@ -38,9 +38,11 @@
                         {{-- <p>: {{ $activity->return_place }}</p> --}}
                     </div>
                     <div class="">
-                        <h1 class="text-xl font-bold uppercase text-ksdGreen sm:text-3xl">€ {{ $activity->price }}
-                        </h1>
-                        <p class="">Deze prijs is een richtprijs</p>
+                        <div class="flex text-sm text-gray-600 dark:text-gray-400">
+                            <h1 class="text-xl font-bold uppercase text-ksdGreen sm:text-3xl">€ {{ $activity->price }}
+                            </h1>
+                            <x-tooltip>Deze prijs is een richtprijs, vervoer is hier nog niet altijd bij inbegrepen.</x-tooltip>
+                        </div>
                         @if ($activity->participants >= $activity->max_participants)
                             <p class="text-sm text-gray-600 dark:text-gray-400">{{ __('Volzet') }}</p>
                         @else

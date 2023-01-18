@@ -44,7 +44,7 @@
                                         </x-slot>
 
                                         <x-slot name="content">
-                                            <x-dropdown-link :href="route('dashboard.activities.edit', $activity)">
+                                            <x-dropdown-link :href="route('dashboard.activities.edit', $activity->id)">
                                                 {{ __('Bewerken') }}
                                             </x-dropdown-link>
 

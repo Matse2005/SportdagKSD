@@ -94,8 +94,9 @@ class AdminActivityController extends Controller
      * @param  \App\Models\Activities  $activity
      * @return \Illuminate\Http\Response
      */
-    public function edit(Activities $activity)
+    public function edit($id)
     {
+        $activity =  Activities::find($id);
         return view('dashboard.edit.activity', ['activity' => $activity]);
     }
 
@@ -106,9 +107,10 @@ class AdminActivityController extends Controller
      * @param  \App\Models\Activities  $activity
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(Request $request)
     {
         $request->validate([
+            'id' => 'required|numeric',
             'name' => 'required|string|max:255',
             'location' => 'required|string|max:255',
             'departure_place' => 'required|string|max:255',
@@ -121,12 +123,12 @@ class AdminActivityController extends Controller
             'description' => 'required',
         ]);
 
-        $essentials = json_encode(preg_split("/\,/", $request->essentials));
-        $description = str_replace('\n', "<br>", $request->description);
-        if ($request->file('image') !== null)
-            $image = file_get_contents($request->file('image'));
+        // return redirect(route("error", $request));
 
-        Activities::find($id)->update([
+        $essentials = json_encode(preg_split("/\,/", rtrim($request->essentials, ',')));
+        $description = str_replace('\n', "<br>", $request->description);
+
+        Activities::find($request->id)->update([
             'name' => $request->name,
             'location' => $request->location,
             'departure_place' => $request->departure_place,
@@ -137,15 +139,14 @@ class AdminActivityController extends Controller
             'price' => $request->price,
             'max_participants' => $request->max_participants,
             'description' => $description,
-            'image' => $image,
             'visible' => 1
         ]);
 
-
         if ($request->file('image') !== null) {
-            $image = file_get_contents($request->file('image'));
-            Activities::find($id)->update([
-                'image' => $image,
+            $fileName = time() . '.' . $request->file("image")->getClientOriginalExtension();
+            $request->file("image")->storeAs('public', $fileName);
+            Activities::find($request->id)->update([
+                'image' => $fileName,
             ]);
         }
 

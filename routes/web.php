@@ -40,6 +40,10 @@ Route::resource('/activiteiten', ActivitiesController::class)
     ->name('index', 'activities.index')
     ->middleware(['auth', 'verified']);
 
+Route::get('/error', function ($arr) {
+    view("error", ["error" => $arr]);
+})->name('index', 'error');
+
 Route::resource('/inschrijven', RegistrateController::class)
     ->only(['index', 'store'])
     ->name('index', 'registrate.index')
@@ -62,6 +66,7 @@ Route::resource('/inschrijving', RegistrationsController::class)
 
 Route::get('/activiteit/{id}', [ActivitiesController::class, 'show'])
     ->name('activities.show');
+
 // Dashboard
 Route::prefix('dashboard')->group(function () {
     Route::get('/', function () {
@@ -72,6 +77,7 @@ Route::prefix('dashboard')->group(function () {
         $answers = Answers::count();
         return view('dashboard/dashboard', ['accounts' => $accounts, 'activities' => $activities, 'registrations' => $registrations, 'questions' => $questions, 'answers' => $answers]);
     })->name('dashboard')->middleware(['auth', 'verified', 'can:view dashboard']);
+
     Route::resource('/accounts', AdminUserController::class)
         ->only(['index', 'edit', 'update', 'destroy', 'create', 'store'])
         ->name("index", 'dashboard.accounts.index')
@@ -81,30 +87,37 @@ Route::prefix('dashboard')->group(function () {
         ->name("create", 'dashboard.accounts.create')
         ->name("store", 'dashboard.accounts.store')
         ->middleware(['auth', 'verified', 'can:view dashboard']);
+
     Route::resource('/accounts/import', AdminImportController::class)
         ->only(['index', 'store'])
         ->name("index", 'dashboard.accounts.import')
         ->name("store", 'dashboard.accounts.import.store')
         ->middleware(['auth', 'verified', 'can:view dashboard']);
+
     Route::resource('/admin', AdminAdminController::class)
         ->only(['destroy', 'store'])
         ->name("store", 'dashboard.admin.store')
         ->name("destroy", 'dashboard.admin.destroy')
         ->middleware(['auth', 'verified', 'can:view dashboard']);
+
     Route::resource('/activiteiten', AdminActivityController::class)
-        ->only(['index', 'destroy', 'create', 'store', 'edit', 'update'])
+        ->only(['index', 'destroy', 'create', 'store', 'edit'])
         ->name("index", 'dashboard.activities.index')
         ->name("destroy", 'dashboard.activities.destroy')
         ->name("create", 'dashboard.activities.create')
         ->name("edit", 'dashboard.activities.edit')
-        ->name("update", 'dashboard.activities.update')
         ->name("store", 'dashboard.activities.store')
         ->middleware(['auth', 'verified', 'can:view dashboard']);
+
+    Route::post('/activiteiten/update', [AdminActivityController::class, "update"])
+        ->name('dashboard.activities.update');
+
     Route::resource('/inschrijvingen', AdminQuestionController::class)
         ->only(['index', 'destroy'])
         ->name("index", 'dashboard.registrations.index')
         ->name("destroy", 'dashboard.registrations.destroy')
         ->middleware(['auth', 'verified', 'can:view dashboard']);
+
     Route::resource('/vragen', AdminQuestionController::class)
         ->only(['index', 'destroy', 'create', 'store'])
         ->name("index", 'dashboard.questions.index')
@@ -112,33 +125,41 @@ Route::prefix('dashboard')->group(function () {
         ->name("store", 'dashboard.questions.store')
         ->name("destroy", 'dashboard.questions.destroy')
         ->middleware(['auth', 'verified', 'can:view dashboard']);
+
     Route::resource('/vragen/antwoorden', AdminAnswerController::class)
         ->only(['index', 'destroy'])
         ->name("index", 'dashboard.answers.index')
         ->name("destroy", 'dashboard.answers.destroy')
         ->middleware(['auth', 'verified', 'can:view dashboard']);
+
     Route::resource('/inschrijvingen', AdminRegistrationsController::class)
         ->only(['index', 'destroy', 'create', 'store'])
         ->name("index", 'dashboard.registrations.index')
         ->name("store", 'dashboard.registrations.store')
         ->name("destroy", 'dashboard.registrations.destroy')
         ->middleware(['auth', 'verified', 'can:view dashboard']);
+
     Route::get('/inschrijven/{user_id}', [AdminRegistrationsController::class, "create"])
         ->name('dashboard.registrations.create')
         ->middleware(['auth', 'verified', 'can:view dashboard']);
+
     Route::resource('/instellingen', AdminSettingsController::class)
         ->only(['index'])
         ->name("index", 'dashboard.settings.index')
         ->middleware(['auth', 'verified', 'can:view dashboard']);
+
     Route::post('/instellingen/update', [AdminSettingsController::class, "update"])
         ->name('dashboard.settings.update')
         ->middleware(['auth', 'verified', 'can:view dashboard']);
+
     Route::get('/exporteren', function () {
         return view('dashboard/export');
     })->name('dashboard.export.index')->middleware(['auth', 'verified', 'can:view dashboard']);
+
     Route::get('/exporteren/export', [AdminExportController::class, 'export'])
         ->name('dashboard.export.export')
         ->middleware(['auth', 'verified', 'can:view dashboard']);
+
     Route::resource('/resetten', AdminBulkDeleteController::class)
         ->only(['index', 'store'])
         ->name("index", 'dashboard.bulk-delete.index')
