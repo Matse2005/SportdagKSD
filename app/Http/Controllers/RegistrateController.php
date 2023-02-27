@@ -7,6 +7,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use App\Http\Controllers\ActivitiesController;
 use App\Models\Activities;
+use App\Models\Discussed;
 use App\Models\Questions;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Validator;
@@ -25,7 +26,8 @@ class RegistrateController extends Controller
     {
         $registrated = $this->registrated(Auth()->user()->id);
         $activities = DB::table('activities')->get()->where("visible", "=", "1");
-        return view('registrate', ['activities' => $activities, 'registrated' => $registrated]);
+        $discussed = Discussed::where('user_id', Auth()->user()->id)->exists() == true ? false : true;
+        return view('registrate', ['activities' => $activities, 'registrated' => $registrated,  'discussed' => $discussed]);
     }
 
     /**

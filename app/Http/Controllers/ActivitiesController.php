@@ -6,6 +6,7 @@ use App\Models\Activities;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use App\Http\Controllers\RegistrationsController;
+use App\Models\Discussed;
 
 class ActivitiesController extends Controller
 {
@@ -17,7 +18,8 @@ class ActivitiesController extends Controller
     public function index()
     {
         $activities = Activities::where("visible", 1)->get();
-        return view('activities', ['activities' => $activities]);
+        $discussed = Discussed::where('user_id', Auth()->user()->id)->exists() == true ? false : true;
+        return view('activities', ['activities' => $activities, 'discussed' => $discussed]);
     }
 
     /**

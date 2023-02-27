@@ -16,6 +16,7 @@ module.exports = {
             },
             colors: {
                 ksdGreen: "#BBCE1F",
+                ksdBlue: "#009EE2",
             },
         },
     },

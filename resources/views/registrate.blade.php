@@ -67,12 +67,33 @@
                 <div
                     class="grid p-3 space-y-2 text-gray-900 duration-300 ease-in-out delay-150 rounded-md shadow-lg sm:py-6 dark:text-white dark:bg-gray-800 sm:p-10 place-items-center">
                     <div class="max-w-md text-center">
-                        <h3 class="text-xl font-bold">Inschrijvingen gesloten</h3>
-                        <p>De inschrijvingen zijn op deze moment gesloten, kom later nog eens terug of contacteer
-                            een beheerder als je denkt dat dit een fout is.</p>
+                        <div class="flex items-center justify-center p-5 w-full">
+                            <div class="text-center">
+                                <div class="inline-flex rounded-full bg-ksdGreen/90 p-4">
+                                    <div class="rounded-full stroke-ksdBlue bg-ksdGreen/80 p-4">
+                                        <svg class="w-16 h-16 " viewBox="0 0 28 28" fill="none"
+                                            xmlns="http://www.w3.org/2000/svg">
+                                            <path
+                                                d="M14.0002 9.33337V14M14.0002 18.6667H14.0118M25.6668 14C25.6668 20.4434 20.4435 25.6667 14.0002 25.6667C7.55684 25.6667 2.3335 20.4434 2.3335 14C2.3335 7.55672 7.55684 2.33337 14.0002 2.33337C20.4435 2.33337 25.6668 7.55672 25.6668 14Z"
+                                                stroke-width="2" stroke-linecap="round" stroke-linejoin="round"></path>
+                                        </svg>
+                                    </div>
+                                </div>
+                                <h1 class="mt-5 text-xl font-bold lg:text-3xl">Inschrijvingen
+                                    gesloten</h1>
+                                <p class="mt-5 lg:text-lg">De inschrijvingen zijn op deze moment
+                                    gesloten, kom later nog eens terug of contacteer
+                                    een beheerder als je denkt dat dit een fout is.
+                                </p>
+                            </div>
+                        </div>
+
+
                     </div>
                 </div>
             @endif
         </div>
     </div>
+
+    <x-discussed discussed="{{ $discussed }}" dismissable="false" />
 </x-app-layout>

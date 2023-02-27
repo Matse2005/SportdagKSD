@@ -17,6 +17,7 @@ use App\Http\Controllers\Admin\AdminSettingsController;
 use App\Http\Controllers\Admin\AdminExportController;
 use App\Http\Controllers\Admin\AdminBulkDeleteController;
 use App\Http\Controllers\AnswerController;
+use App\Http\Controllers\DiscussedController;
 use App\Models\Activities;
 use App\Models\Questions;
 use App\Models\Registrations;
@@ -39,6 +40,9 @@ use Illuminate\Support\Facades\Route;
 Route::resource('/activiteiten', ActivitiesController::class)
     ->name('index', 'activities.index')
     ->middleware(['auth', 'verified']);
+
+Route::post('/discussed', [DiscussedController::class, "store"])
+    ->name('discussed.store');
 
 Route::get('/error', function ($arr) {
     view("error", ["error" => $arr]);

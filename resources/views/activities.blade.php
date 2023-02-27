@@ -17,10 +17,6 @@
                                         {{ $activity->name }}
                                     </h5>
                                     <div class="flex items-center {{-- gap-4 --}}">
-                                        {{-- <a href="/activiteit/{{ $activity->id }}">
-                                        <x-primary-button>{{ __('Meer info') }}</x-primary-button>
-                                    </a> --}}
-
                                         @if ($activity->participants >= $activity->max_participants)
                                             <p class="text-sm text-gray-600 dark:text-gray-400">{{ __('Volzet') }}</p>
                                         @else
@@ -37,4 +33,6 @@
             </div>
         </div>
     </div>
+
+    <x-discussed discussed="{{ $discussed }}" dismissable="true" />
 </x-app-layout>
