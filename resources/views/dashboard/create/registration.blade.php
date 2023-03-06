@@ -28,7 +28,7 @@
                     </div>
                     {{-- activity_id --}}
                     <div class="flex-1 space-y-1">
-                        <p><span class="font-semibold">Type vraag</span></p>
+                        <p><span class="font-semibold">Activiteit</span></p>
                         <select name="activity_id" id="activity_id"
                             class="w-full bg-gray-100 border-none rounded-md shadow-sm dark:bg-gray-900 dark:text-gray-300">
                             @foreach ($activities as $activity)

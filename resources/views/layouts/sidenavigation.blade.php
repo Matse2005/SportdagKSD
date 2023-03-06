@@ -24,7 +24,7 @@
                         <div class="mt-6">
                             <x-dashboard-nav-link :url="route('dashboard.export.index')" icon="file-export" page="Exporteren"
                                 :active="request()->routeIs('dashboard.export.index')" />
-                            <x-dashboard-nav-link :url="route('dashboard.bulk-delete.index')" icon="trash-can" page="Resetten"
+                            <x-dashboard-nav-link :url="route('dashboard.bulk_delete.index')" icon="trash-can" page="Resetten"
                                 class="hover:text-red-700" :active="request()->routeIs('dashboard.bulk-delete.index')" />
                         </div>
                     </ul>
@@ -92,10 +92,10 @@
                                 :active="request()->routeIs('dashboard.answers.index')" />
                         </div>
                         <div class="mt-6">
-                            <x-dashboard-nav-link :url="route('dashboard.accounts.index')" icon="file-export" page="Exporteren"
-                                :active="request()->routeIs('dashboard.accounts.index')" />
-                            <x-dashboard-nav-link :url="route('dashboard.activities.index')" icon="trash-can" page="Resetten"
-                                :active="request()->routeIs('dashboard.activities.index')" />
+                            <x-dashboard-nav-link :url="route('dashboard.export.index')" icon="file-export" page="Exporteren"
+                                :active="request()->routeIs('dashboard.export.index')" />
+                            <x-dashboard-nav-link :url="route('dashboard.bulk_delete.index')" icon="trash-can" page="Resetten"
+                                class="hover:text-red-700" :active="request()->routeIs('dashboard.bulk-delete.index')" />
                         </div>
                     </ul>
                 </div>

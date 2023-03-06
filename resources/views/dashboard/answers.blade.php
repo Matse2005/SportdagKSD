@@ -4,12 +4,12 @@
             <div
                 class="p-6 space-x-2 space-y-2 overflow-hidden bg-white rounded-md shadow-lg dark:bg-gray-800 sm:flex sm:justify-between sm:space-y-0 sm:items-center">
                 <h2 class="text-2xl font-semibold text-gray-600 dark:text-white">Antwoorden</h2>
-                <div class="">
+                {{-- <div class="">
                     <a tabindex="-1" :href="route('dashboard.answers.create')">
                         <x-primary-button>{{ __('Nieuw antwoord') }}
                         </x-primary-button>
                     </a>
-                </div>
+                </div> --}}
             </div>
         </div>
         <div class="mx-auto space-x-4 space-y-4 sm:px-6 lg:px-8">
@@ -42,9 +42,9 @@
                                         </x-slot>
 
                                         <x-slot name="content">
-                                            <x-dropdown-link :href="route('profile.edit')">
+                                            {{-- <x-dropdown-link :href="route('profile.edit')">
                                                 {{ __('Bewerken') }}
-                                            </x-dropdown-link>
+                                            </x-dropdown-link> --}}
 
                                             <!-- Authentication -->
                                             <form method="POST"

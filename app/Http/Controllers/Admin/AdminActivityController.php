@@ -97,6 +97,7 @@ class AdminActivityController extends Controller
     public function edit($id)
     {
         $activity =  Activities::find($id);
+        $activity->description = str_replace("<br>", '\n', $activity->description);
         return view('dashboard.edit.activity', ['activity' => $activity]);
     }
 

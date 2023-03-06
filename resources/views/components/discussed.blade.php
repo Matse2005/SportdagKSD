@@ -16,7 +16,7 @@
                 x-transition:leave="transition ease-in duration-200 transform"
                 x-transition:leave-start="opacity-100 translate-y-0 sm:scale-100"
                 x-transition:leave-end="opacity-0 translate-y-4 sm:translate-y-0 sm:scale-95"
-                class="inline-block w-full max-w-lg text-center p-8 my-20 overflow-hidden text-left transition-all transform dark:bg-gray-800 dark:text-white bg-white rounded-lg shadow-xl 2xl:max-w-2xl">
+                class="inline-block w-full max-w-lg text-center p-8 my-20 overflow-hidden transition-all transform dark:bg-gray-800 dark:text-white bg-white rounded-lg shadow-xl 2xl:max-w-2xl">
                 <div class="mt-5">
                     <div>
                         <p>Ik ga er mee akkoord dat ik de prijzen van activiteiten heb overlegd en ga overleggen met

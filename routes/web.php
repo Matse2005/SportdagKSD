@@ -24,6 +24,7 @@ use App\Models\Registrations;
 use App\Models\Answers;
 use App\Models\User;
 use Illuminate\Support\Facades\Route;
+use Illuminate\Support\Facades\Artisan;
 
 /*
 |--------------------------------------------------------------------------
@@ -35,6 +36,10 @@ use Illuminate\Support\Facades\Route;
 | contains the "web" middleware group. Now create something great!
 |
 */
+
+Route::get('/linkstorage', function () {
+    Artisan::call('storage:link');
+});
 
 // Public (If logged in)
 Route::resource('/activiteiten', ActivitiesController::class)
@@ -166,8 +171,28 @@ Route::prefix('dashboard')->group(function () {
 
     Route::resource('/resetten', AdminBulkDeleteController::class)
         ->only(['index', 'store'])
-        ->name("index", 'dashboard.bulk-delete.index')
-        ->name("store", 'dashboard.bulk-delete.store')
+        ->name("index", 'dashboard.bulk_delete.index')
+        ->name("store", 'dashboard.bulk_delete.store')
+        ->middleware(['auth', 'verified', 'can:view dashboard']);
+
+    Route::post('/resetten/accounts', [AdminBulkDeleteController::class, 'accounts'])
+        ->name('dashboard.bulk_delete.delete.accounts')
+        ->middleware(['auth', 'verified', 'can:view dashboard']);
+
+    Route::post('/resetten/activiteiten', [AdminBulkDeleteController::class, 'activities'])
+        ->name('dashboard.bulk_delete.delete.activities')
+        ->middleware(['auth', 'verified', 'can:view dashboard']);
+
+    Route::post('/resetten/inschrijvingen', [AdminBulkDeleteController::class, 'signups'])
+        ->name('dashboard.bulk_delete.delete.signups')
+        ->middleware(['auth', 'verified', 'can:view dashboard']);
+
+    Route::post('/resetten/vragen', [AdminBulkDeleteController::class, 'questions'])
+        ->name('dashboard.bulk_delete.delete.questions')
+        ->middleware(['auth', 'verified', 'can:view dashboard']);
+
+    Route::post('/resetten/antwoorden', [AdminBulkDeleteController::class, 'answers'])
+        ->name('dashboard.bulk_delete.delete.answers')
         ->middleware(['auth', 'verified', 'can:view dashboard']);
 });
 

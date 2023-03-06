@@ -45,7 +45,8 @@ class ActivitiesController extends Controller
     {
         $activity = Activities::find($activity_id);
         if ($type == 1) return $activity->increment('participants');
-        return $activity->decrement('participants');
+        if ($activity->participants > 0) $activity->decrement('participants');
+        return;
     }
 
     public static function availabilty($activity_id)
