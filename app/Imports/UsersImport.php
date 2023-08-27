@@ -26,7 +26,7 @@ class UsersImport implements ToModel, WithHeadingRow, WithUpserts, WithBatchInse
             'lastname' => $row['achternaam'] ?? $row['lastname'],
             'email' => $row['email'] ?? $row['email'],
             'password' => "hGSDbvFDs",
-            'class' => $row['klas'] ?? $row['class']
+            'class' => isset($row['klas']) ? $row["klas"] : (isset($row['class']) ? $row['class'] : "")
         ]);
     }
 

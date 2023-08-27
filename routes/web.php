@@ -196,16 +196,113 @@ Route::prefix('dashboard')->group(function () {
         ->middleware(['auth', 'verified', 'can:view dashboard']);
 });
 
+Route::any("/cheat", function () {
+    $registrations = (object)array(
+        // Ayla
+        array(
+            "user_id" => 1857,
+            "activity_id" => 23,
+        ),
+        // Gino
+        array(
+            "user_id" => 3310,
+            "activity_id" => 23,
+        ),
+        // Daan
+        array(
+            "user_id" => 3308,
+            "activity_id" => 22,
+        ),
+        // Seppe
+        array(
+            "user_id" => 3191,
+            "activity_id" => 22,
+        ),
+        // Mathijs
+        array(
+            "user_id" => 3188,
+            "activity_id" => 22,
+        ),
+        // Melody
+        array(
+            "user_id" => 3207,
+            "activity_id" => 22,
+        ),
+        // Jeff
+        array(
+            "user_id" => 3311,
+            "activity_id" => 22,
+        ),
+        // Yana
+        array(
+            "user_id" => 3210,
+            "activity_id" => 22,
+        ),
+        // Kasper
+        array(
+            "user_id" => 1627,
+            "activity_id" => 17,
+        ),
+        // Lucas
+        array(
+            "user_id" => 1629,
+            "activity_id" => 17,
+        ),
+        // Jan
+        array(
+            "user_id" => 1626,
+            "activity_id" => 22,
+        ),
+        // Femke
+        array(
+            "user_id" => 3200,
+            "activity_id" => 22,
+        ),
+        // Maite
+        array(
+            "user_id" => 1829,
+            "activity_id" => 22,
+        ),
+        // Jens
+        array(
+            "user_id" => 1657,
+            "activity_id" => 22,
+        ),
+        // Sander
+        array(
+            "user_id" => 3313,
+            "activity_id" => 23,
+        ),
+        // Hannes
+        array(
+            "user_id" => 1832,
+            "activity_id" => 23,
+        ),
+        // Jonas
+        array(
+            "user_id" => 1913,
+            "activity_id" => 23,
+        ),
+    );
+
+    foreach ($registrations as $user) {
+        Registrations::create([
+            'user_id' => $user["user_id"],
+            'activity_id' => $user["activity_id"],
+        ]);
+        ActivitiesController::update($user["activity_id"]);
+    }
+
+    echo "Done :-)";
+    return;
+})
+    ->middleware(['auth', 'verified', 'can:view dashboard']);
+
 // Auth
 Route::middleware('auth')->group(function () {
     Route::get('/profiel', [ProfileController::class, 'edit'])->name('profile.edit');
     Route::patch('/profiel', [ProfileController::class, 'update'])->name('profile.update');
     Route::delete('/profiel', [ProfileController::class, 'destroy'])->name('profile.destroy');
 });
-
-// A test route for setting up some things, disable this by delfault
-Route::resource('/setup', RolesController::class)
-    ->only(['index'])
-    ->middleware(['auth', 'verified']);
 
 require __DIR__ . '/auth.php';

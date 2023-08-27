@@ -72,7 +72,7 @@ class AnswerController extends Controller
      */
     public function update(Request $request, Answers $answers)
     {
-        $request = (object) $request;
+        // $request = (object) $request;
         $registrated = $this->registrated(Auth()->user()->id);
         if ($registrated) {
             $activity = Activities::find($registrated);

@@ -30,6 +30,7 @@ class ActivitiesController extends Controller
     public function show($id)
     {
         $activity = DB::table('activities')->get()->where("id", "=", $id)->first();
+        if ($activity == null) return abort(404);
         return view('activity', ['activity' => $activity, 'registrated' => RegistrationsController::registrated(Auth()->user()->id)]);
     }
 
