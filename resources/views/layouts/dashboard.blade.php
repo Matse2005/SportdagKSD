@@ -18,31 +18,30 @@
     @vite(['resources/css/app.css', 'resources/js/app.js'])
 </head>
 
-<body class="font-sans
-        antialiased" x-data="{ darkMode: false }" x-init="if (!('darkMode' in localStorage) && window.matchMedia('(prefers-color-scheme: dark)').matches) {
-            localStorage.setItem('darkMode', JSON.stringify(true));
-        }
-        darkMode = JSON.parse(localStorage.getItem('darkMode'));
-        $watch('darkMode', value => localStorage.setItem('darkMode', JSON.stringify(value)))" x-cloak>
+<body class="font-sans antialiased" x-data="{ darkMode: false }" x-init="if (!('darkMode' in localStorage) && window.matchMedia('(prefers-color-scheme: dark)').matches) {
+    localStorage.setItem('darkMode', JSON.stringify(true));
+}
+darkMode = JSON.parse(localStorage.getItem('darkMode'));
+$watch('darkMode', value => localStorage.setItem('darkMode', JSON.stringify(value)))" x-cloak>
     <div x-bind:class="{
         'dark': darkMode === true,
         'bg-gray-900 text-white': darkMode === true,
         'bg-gray-100 text-gray-600': darkMode ===
             false
     }"
-        class="min-h-screen h-full">
+        class="h-full min-h-screen">
         <div class="">
             <x-announcement />
             @include('layouts.navigation')
 
-            <x-notify-messages />
+            @include('notify::components.notify')
             <!-- Page Content -->
             <main>
                 <!-- component -->
-                <div class="w-full h-full max-w-7xl mx-auto">
+                <div class="w-full h-full mx-auto max-w-7xl">
                     <div class="flex flex-no-wrap">
                         @include('layouts.sidenavigation')
-                        <div class="w-full mx-auto px-6">
+                        <div class="w-full px-6 mx-auto">
                             <div class="w-full">
                                 {{ $slot }}
                             </div>

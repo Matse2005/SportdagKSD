@@ -20,15 +20,15 @@
         //  Reload when registrations open
         $utc_start_datetime = strtotime(date('Y-m-d H:i', strtotime($settings['start_datetime']->value)));
         $utc_end_datetime = strtotime(date('Y-m-d H:i', strtotime($settings['end_datetime']->value)));
-        
+
         $offset = date('Z');
-        
+
         $local_start_datetime_timestamp = date('Y-m-d H:i', $utc_start_datetime + $offset);
         $local_end_datetime_timestamp = date('Y-m-d H:i', $utc_end_datetime + $offset);
-        
+
         $local_start_datetime = strtotime($local_start_datetime_timestamp);
         $local_end_datetime = strtotime($local_end_datetime_timestamp);
-        
+
         $current_datetime = strtotime(date('Y-m-d H:i'));
         if ($current_datetime < $local_start_datetime) {
             $time = abs($local_start_datetime - $current_datetime);
@@ -51,12 +51,12 @@ $watch('darkMode', value => localStorage.setItem('darkMode', JSON.stringify(valu
         'bg-gray-100 text-gray-600': darkMode ===
             false
     }"
-        class="min-h-screen h-full">
+        class="h-full min-h-screen">
         <div class="">
             <x-announcement />
             @include('layouts.navigation')
 
-            <x-notify-messages />
+            @include('notify::components.notify')
             <!-- Page Content -->
             <main>
                 {{ $slot }}

